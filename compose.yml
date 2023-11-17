@@ -1,0 +1,33 @@
+version: "3.9"
+ 
+services:
+  Backend:
+    image: "nodev"
+    container_name: "backend"
+    network_mode: "host"
+    stdin_open: true
+    tty: true
+    volumes:
+       - /home/samad/share/programs/www/TSDT/Backend/:/var/www/html/Backend
+       
+  Frontend:
+    image: "nodev"
+    container_name: "frontend"
+    network_mode: "host"
+    stdin_open: true
+    tty: true
+    volumes:
+       - /home/samad/share/programs/www/TSDT/Frontend/:/var/www/html/Frontend
+       
+  db:
+    image: "postgres"
+    container_name: "postgres"
+    network_mode: "host"
+    stdin_open: true
+    tty: true
+    volumes:
+       - /home/samad/share/programs/www/TSDT/db/:/var/lib/postgresql/data 
+
+
+# docker compose -f /docker/compose/tsdt -p tsdt up -d
+# docker compose -f /docker/compose/tsdt -p tsdt down

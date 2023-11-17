@@ -1,5 +1,5 @@
 FROM ubuntu:22.04
-MAINTAINER ghanbari <ghanbari.samad@gmail.com>
+LABEL MAINTAINER="ghanbari <ghanbari.samad@gmail.com>"
 
 # Installing packages
 RUN apt update 
@@ -17,13 +17,13 @@ RUN npm install -g nodemon express-generator
 RUN npm install -g create-react-app
 RUN npm install -g create-next-app
 
-RUN mkdir -p /var/www/html/Backend
-RUN chmod 775 /var/www/html/Backend
-RUN chown root:www-data /var/www/html/Backend
+RUN mkdir -p /var/www/html/backend
+RUN chmod 775 /var/www/html/backend
+RUN chown root:www-data /var/www/html/backend
 
-RUN mkdir -p /var/www/html/Frontend
-RUN chmod 775 /var/www/html/Frontend
-RUN chown root:www-data /var/www/html/Frontend
+RUN mkdir -p /var/www/html/frontend
+RUN chmod 775 /var/www/html/frontend
+RUN chown root:www-data /var/www/html/frontend
 
 EXPOSE 80
 

@@ -1,9 +1,10 @@
 var express = require("express");
 var path = require("path");
-//var cookieParser = require("cookie-parser");
-//var logger = require("morgan");
+var Dbman = require("./lib/dbMan");
 var dotenv = require("dotenv");
 var cors = require("cors");
+//var cookieParser = require("cookie-parser");
+//var logger = require("morgan");
 
 var baseRouter = require("./routes/base");
 
@@ -17,6 +18,11 @@ app.use(express.urlencoded({ extended: false }));
 //app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, "public")));
 
+let dbMan = new Dbman();
+app.use(function (req, res, next) {
+  req.dbMan = dbMan;
+  next();
+});
 app.use("/", baseRouter);
 app.use((req, res, next) => {
   res.json({});

@@ -1,4 +1,5 @@
 FROM ubuntu:22.04
+#357M
 LABEL MAINTAINER="ghanbari <ghanbari.samad@gmail.com>"
 
 # Installing packages
@@ -14,8 +15,9 @@ COPY ./nodejs /opt/nodejs
 ENV PATH="/opt/nodejs/bin:$PATH" 
 
 RUN npm install -g nodemon express-generator 
-RUN npm install -g create-react-app
+#RUN npm install -g create-react-app
 RUN npm install -g create-next-app
+RUN npm install -g pg pg-hstore sequelize-auto
 
 RUN mkdir -p /var/www/html/backend
 RUN chmod 775 /var/www/html/backend

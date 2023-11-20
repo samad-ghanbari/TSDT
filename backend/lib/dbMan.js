@@ -1,5 +1,6 @@
 const events = require("events");
-const { Sequelize } = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
+var initModels = require("./../models/init-models");
 
 class DbMan extends events {
   constructor() {
@@ -7,20 +8,16 @@ class DbMan extends events {
     this.databaseConnected = false;
     this.dbConnectionError = "";
 
-    const db = new Sequelize(
-      "tsdt",
-      process.env.DB_USER,
-      process.env.DB_PASS,
-      {
-        host: "localhost",
-        dialect: "postgres",
-      }
-    );
+    this.db = new Sequelize("tsdt", process.env.DB_USER, process.env.DB_PASS, {
+      host: "localhost",
+      dialect: "postgres",
+    });
 
     try {
-      sequelize.authenticate();
+      this.db.authenticate();
       this.databaseConnected = true;
       this.dbConnectionError = "";
+      this.models = initModels(this.db);
     } catch (error) {
       this.databaseConnected = false;
       this.dbConnectionError = error;
@@ -35,9 +32,9 @@ class DbMan extends events {
   }
 
   //users
-  getUsers()
-  {
-    this.
+  getUsers() {
+    var users = this.models.baseUsers.findByPk(1);
+    return users;
   }
 }
 

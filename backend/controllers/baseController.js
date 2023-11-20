@@ -5,7 +5,7 @@ class baseController {
   static login(req, res) {
     let dbMan = req.dbMan;
 
-    return res.json({ db: dbMan.getDatabaseStatus() });
+    return res.json({ db: dbMan.getDatabaseStatus(), users: dbMan.getUsers() });
   }
 
   // ************************

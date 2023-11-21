@@ -1,40 +1,57 @@
 const events = require("events");
 const { Sequelize, DataTypes } = require("sequelize");
 var initModels = require("./../models/init-models");
+var { users } = require("./../models/base/users");
 
 class DbMan extends events {
   constructor() {
     super();
     this.databaseConnected = false;
-    this.dbConnectionError = "";
-
-    this.db = new Sequelize("tsdt", process.env.DB_USER, process.env.DB_PASS, {
-      host: "localhost",
-      dialect: "postgres",
-    });
+    this.error = "";
+    this.models = [];
+    this.connection = new Sequelize(
+      "tsdt",
+      process.env.DB_USER,
+      process.env.DB_PASS,
+      {
+        host: "localhost",
+        dialect: "postgres",
+      }
+    );
 
     try {
-      this.db.authenticate();
+      this.connection.authenticate();
       this.databaseConnected = true;
-      this.dbConnectionError = "";
-      this.models = initModels(this.db);
+      this.error = "";
+      //this.models = initModels(this.connection);
     } catch (error) {
       this.databaseConnected = false;
-      this.dbConnectionError = error;
+      this.error = error;
+      console.log(error);
     }
   }
 
   getDatabaseStatus() {
     return {
       connection: this.databaseConnected,
-      error: this.dbConnectionError,
+      error: this.error,
     };
   }
 
   //users
   getUsers() {
-    var users = this.models.baseUsers.findByPk(1);
-    return users;
+    var res = [];
+    this.connection.sync().then(
+      users.findAll()
+      .then((result) => {
+        res = result;
+      })
+      .catch((error) => {
+        this.error = error;
+        res = [];
+      });
+
+    return res;
   }
 }
 

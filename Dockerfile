@@ -23,9 +23,9 @@ RUN mkdir -p /var/www/html/backend
 RUN chmod 775 /var/www/html/backend
 RUN chown root:www-data /var/www/html/backend
 
-RUN mkdir -p /var/www/html/frontend
-RUN chmod 775 /var/www/html/frontend
-RUN chown root:www-data /var/www/html/frontend
+RUN mkdir -p /var/www/html/ui
+RUN chmod 775 /var/www/html/ui
+RUN chown root:www-data /var/www/html/ui
 
 EXPOSE 80
 

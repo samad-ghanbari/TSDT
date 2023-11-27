@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
-const db = require("./../configs/db");
-const userModel = require("../models/base/users")(db, DataTypes);
+const db = require("../configs/db");
+const userModel = require("../models/login/users")(db, DataTypes);
 
 class BaseController {
   // ************************ Login

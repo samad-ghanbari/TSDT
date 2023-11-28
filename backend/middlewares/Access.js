@@ -1,21 +1,19 @@
-var jwt = require("jsonwebtoken");
 const { DataTypes } = require("sequelize");
 const db = require("../configs/db");
 const userModel = require("../models/login/users")(db, DataTypes);
-const baseControllers = require("./../controllers/BaseController");
+var jwt = require("jsonwebtoken");
+const requestIP = require("request-ip");
 
 const accessCheck = (req, res, next) => {
-  //no token
-  if (!req.headers.authorization) {
-    baseControllers.login;
+  let token = null;
+  let access = {};
+  let ips = {};
+  if (req.headers.authorization) {
+    access.token = req.headers.authorization.split(" ")[1];
+    //access.decodedToken = jwt.verify(token, "samad");
   }
-  //invalid token
-  const token = req.headers.authorization;
-  console.log(token);
-  const decodedToken = jwt.verify(token, "samad");
-  console.log(decodedToken);
-  baseControllers.login;
-
+  access.requestIP = requestIP.getClientIp(req);
+  req.access = access;
   next();
 };
 

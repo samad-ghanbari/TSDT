@@ -10,7 +10,9 @@ const accessCheck = (req, res, next) => {
   let ips = {};
   if (req.headers.authorization) {
     access.token = req.headers.authorization.split(" ")[1];
-    //access.decodedToken = jwt.verify(token, "samad");
+    access.decodedToken = jwt.verify(access.token, "samad");
+  } else {
+    return res.json({ url: "login", error: "no token provided" });
   }
   access.requestIP = requestIP.getClientIp(req);
   req.access = access;

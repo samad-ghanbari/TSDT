@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 //Access middleware
 app.use((req, res, next) => accessCheck(req, res, next));
+
 // Routers
 app.use("/", baseRouter);
 app.use("/login", baseRouter);

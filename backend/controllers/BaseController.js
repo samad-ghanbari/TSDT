@@ -1,9 +1,11 @@
 const { DataTypes } = require("sequelize");
 const db = require("../configs/db");
+const personnels = require("../models/base/personnels");
 const User = require("../models/login/users")(db, DataTypes);
 const Personnel = require("../models/base/personnels")(db, DataTypes);
 const UserPolicy = require("../models/login/user_policy")(db, DataTypes);
 var Netmask = require("netmask").Netmask;
+var jwt = require("jsonwebtoken");
 
 class BaseController {
   // ************************ Login
@@ -49,7 +51,7 @@ class BaseController {
       }
 
       if (!validNet)
-        return res.json({ url: "login", error: "Host-Network access denied" });
+        return res.json({ url: "login", error: "Network access denied" });
     }
 
     if (!validIp && !validNet) {
@@ -57,6 +59,34 @@ class BaseController {
       return res.json({ url: "login", error: "Network access denied" });
     } else {
       //create token
+
+      try {
+        //Creating jwt token
+        const token = jwt.sign(
+          { personnel: personnel, user: user, userPolicy: userPolicy },
+          "samad"
+        );
+
+        res.status(200).json({
+          success: true,
+          data: {
+            personnel: personnel,
+            user: user,
+            userPolicy: userPolicy,
+            token: token,
+          },
+        });
+      } catch (err) {
+        res.status(500).json({
+          success: false,
+          data: {
+            error: err,
+            personnel: personnel,
+            user: user,
+            userPolicy: userPolicy,
+          },
+        });
+      }
     }
   }
 

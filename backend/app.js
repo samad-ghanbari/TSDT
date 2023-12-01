@@ -6,7 +6,6 @@ var accessCheck = require("./middlewares/Access");
 var BaseController = require("./controllers/BaseController");
 var db = require("./configs/db");
 var bodyParser = require("body-parser");
-
 var app = express();
 
 app.use(cors());

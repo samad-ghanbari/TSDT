@@ -8,6 +8,6 @@ router.post("/login", BaseController.login);
 
 router.post("/home", BaseController.home);
 
-router.all("*", BaseController.loginPage);
+router.all("*", BaseController.home);
 
 module.exports = router;
